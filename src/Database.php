@@ -34,6 +34,10 @@ class Database extends BaseDatabase implements DatabaseContract
             if (! empty($server['prefix'])) {
                 $client->setOption(Redis::OPT_PREFIX, $server['prefix']);
             }
+            
+            if (defined('SERIALIZER_IGBINARY') && array_get($server, 'serializer', 'php') === 'igbinary') {
+                $client->setOption(Redis::OPT_SERIALIZER, Redis::SERIALIZER_IGBINARY);
+            }
 
             if (! empty($server['password'])) {
                 $client->auth($server['password']);
